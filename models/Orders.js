@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         customer_id: {
           type: DataTypes.BIGINT(20),
-          references: {         // WorkingDays hasMany Users n:n
+          references: {         // customers hasMany orders 1:n
             model: 'customers',
             key: 'id'
           }
