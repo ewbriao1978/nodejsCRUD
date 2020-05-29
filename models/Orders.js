@@ -35,7 +35,4 @@ module.exports = (sequelize, DataTypes) => {
     
     
     }
-      // Cria a tabela pela primeira vez. 
-       //Post.sync( { force: true } )
-       // dar acesso ao Post
       

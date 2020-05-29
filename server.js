@@ -16,7 +16,7 @@ ordersModel.belongsTo(customerModel)
 
 
 // some settings 
-app.engine('handlebars', handlebars({defaultLayout:'main'}))
+app.engine('handlebars', handlebars())
 app.set('view engine','handlebars')
 
 // use bodyparser to get post results and URI parameters

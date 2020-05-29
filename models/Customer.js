@@ -32,7 +32,7 @@ var Customer = sequelize.define("customers", {
 
 
 }
-  // Cria a tabela pela primeira vez. 
-   //Post.sync( { force: true } )
-   // dar acesso ao Post
+  // Create table for first time 
+   //Customer.sync( { force: true } )
+   
   
