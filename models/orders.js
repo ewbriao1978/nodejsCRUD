@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         customer_id: {
           type: DataTypes.BIGINT(20),
-          references: {         // customers hasMany orders 1:n
-            model: 'customers',
+          references: {         // customer hasMany orders 1:n
+            model: 'customer',
             key: 'id'
           }
         },
@@ -18,11 +18,13 @@ module.exports = (sequelize, DataTypes) => {
         amount: {
           type: DataTypes.DOUBLE(15, 2)
         },
-        created_at: {
+        createdAt: {
+          field: 'created_at',
           type: 'TIMESTAMP',
           default: Date.now()
         },
-        updated_at: {
+        updatedAt: {
+          field: 'updated_at',
           type: 'TIMESTAMP',
           default: Date.now()
         }

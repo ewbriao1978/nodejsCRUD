@@ -9,8 +9,8 @@ const customersRoutes = require('./routes/customersRoutes')
 
 // require models and database settings.
 const { sequelize, Sequelize } = require("./config/database")
-const customerModel = require("./models/Customer")(sequelize,Sequelize)
-const ordersModel = require("./models/Orders")(sequelize,Sequelize)
+const customerModel = require("./models/customers")(sequelize,Sequelize)
+const ordersModel = require("./models/orders")(sequelize,Sequelize)
 customerModel.hasMany(ordersModel)
 ordersModel.belongsTo(customerModel)
 

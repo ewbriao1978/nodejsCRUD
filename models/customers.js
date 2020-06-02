@@ -14,11 +14,13 @@ var Customer = sequelize.define("customers", {
     passwd: {
       type: DataTypes.STRING
     },
-    created_at: {
+    createdAt: {
+      field: 'created_at',
       type: 'TIMESTAMP',
       default: Date.now()
     },
-    updated_at: {
+    updatedAt: {
+      field: 'updated_at',
       type: 'TIMESTAMP',
       default: Date.now()
     }
