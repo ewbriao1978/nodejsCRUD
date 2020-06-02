@@ -14,7 +14,6 @@ const ordersModel = require("./models/orders")(sequelize,Sequelize)
 customerModel.hasMany(ordersModel)
 ordersModel.belongsTo(customerModel)
 
-
 // some settings 
 app.engine('handlebars', handlebars())
 app.set('view engine','handlebars')
