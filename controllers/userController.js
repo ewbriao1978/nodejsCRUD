@@ -9,16 +9,27 @@ exports.create = (req,res) => {
         passwd: md5(req.body.passwd)
     }
 
-// 1 - arrumar flashdata (instalação se for preciso
-//2 - testar gravação. Criar na  view a leitura do flash data
+//2 - revisar aqui se ja existe um mail por callback
 // 3 - validação e testar na view.
+    customerModel.findAll({ 
+        where: {
+            email:customerSetData.email
+        }
 
-    customerModel.create(customerSetData).then(data => {
-              //  req.flash("success_msg","User register successful.")
+    }).then((result) => {
+        // if exist one, so redirect to login page with suitable warning message 
+        req.flash("error_msg","User already registered.")
         res.redirect('/');
-    }).catch(err => {
-               // req.flash("error_msg", "There is a problem with user registration process.")
-        res.redirect('/')
+    }).catch((err) =>{
+        customerModel.create(customerSetData).then(data => {
+            req.flash("success_msg","User register successful.")
+            res.redirect('/');
+        }).catch((err) => {
+            req.flash("error_msg", "There is a problem with user registration process.")
+            res.redirect('/')
+        })
     })
+
+   
 
 }// exports
