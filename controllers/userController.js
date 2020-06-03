@@ -16,18 +16,23 @@ exports.create = (req,res) => {
             email:customerSetData.email
         }
 
-    }).then((result) => {
-        // if exist one, so redirect to login page with suitable warning message 
-        req.flash("error_msg","User already registered.")
-        res.redirect('/');
-    }).catch((err) =>{
+    }).then( result  => {
+        // if exist one, so redirect to login page with suitable warning message
+        req.flash("error_msg","User already registered.")        
+        res.redirect('/')        
+        
+    }).catch( err  =>{
+
         customerModel.create(customerSetData).then(data => {
             req.flash("success_msg","User register successful.")
             res.redirect('/');
         }).catch((err) => {
+            console.log("oops" + err.message)
             req.flash("error_msg", "There is a problem with user registration process.")
             res.redirect('/')
         })
+
+
     })
 
    
