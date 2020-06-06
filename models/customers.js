@@ -29,6 +29,7 @@ var Customer = sequelize.define("customers", {
   }
   
   )
+   //Customer.sync( { force: true } )
 
   return Customer;
 

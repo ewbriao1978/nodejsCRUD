@@ -1,4 +1,11 @@
 
+{{#if errors }}
+    {{#each errors }}
+        <p class="alert alert-danger">{{ msg }}</p>
+    {{/each}}
+{{/if}}
+
+
 <form action="/registration" method="post">
 
         <div class="form-group">

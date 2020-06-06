@@ -18,11 +18,11 @@ customerModel.hasMany(ordersModel)
 ordersModel.belongsTo(customerModel)
 
 
+
 app.use(session({
     secret:"a_any_key_for_this_project",
     resave: false,
     saveUninitialized: false
-
 }))
 
 app.use(flash())
@@ -30,8 +30,12 @@ app.use(flash())
 app.use((req,res,next) => {
     res.locals.success_msg = req.flash("success_msg")
     res.locals.error_msg = req.flash("error_msg")
+    res.locals.errors = req.session.errors
     next()
 })
+
+// forms validator...
+//app.use(expressValidator())
 
 
 // some settings 
