@@ -22,7 +22,6 @@ router.get('/', (req,res) => {
     res.render("users/login",{ layout: false } )
 })
 
-
 router.post('/login',loginFormValidator, userController.login)
 
 router.get('/registration', userController.registrationMethod)
