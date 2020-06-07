@@ -4,6 +4,10 @@ const md5 = require('md5')
 const { validationResult } = require('express-validator');
 
 
+exports.registrationMethod = (req,res) =>{
+    res.render("users/register",{title:"Registration", layout: "formregistermaster", errors: req.session.errors})
+}// exports registrationMethod
+
 exports.create =  (req,res) => {
 
     const errors = validationResult(req)
