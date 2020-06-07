@@ -22,12 +22,10 @@ router.get('/', (req,res) => {
     res.render("users/login",{ layout: false } )
 })
 
+
 router.post('/login',loginFormValidator, userController.login)
 
 router.get('/registration', userController.registrationMethod)
-//router.get('/registration', (req,res) => {
-//    res.render("users/register",{title:"Registration", layout: "formregistermaster", errors: req.session.errors})
-//})
 
 router.post("/registration", registrationFormValidator, userController.create)
 
