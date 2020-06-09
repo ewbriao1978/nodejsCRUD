@@ -15,6 +15,10 @@ let loginFormValidator = [
     check('password').isLength({ min: 5}).withMessage('Password is too short.')
 ]
 
+let OrderFormValidator = [ 
+    check('description').isLength({ min: 5 }).withMessage('Too short description.'),
+    check('amount').isFloat().withMessage('Amount must be a decimal number.')
+]
 
 // routers
 
@@ -27,5 +31,12 @@ router.post('/login',loginFormValidator, userController.login)
 router.get('/registration', userController.registrationMethod)
 
 router.post("/registration", registrationFormValidator, userController.create)
+
+router.get("/usersession",userController.userSession)
+
+router.get("/orders", userController.ordersView)
+
+router.post("/orders",OrderFormValidator,userController.ordersSave)
+
 
 module.exports = router

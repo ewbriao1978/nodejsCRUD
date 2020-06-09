@@ -1,5 +1,8 @@
 const { sequelize, Sequelize } = require("../config/database")
+//models settings
 const customerModel = require("../models/customers") (sequelize,Sequelize)
+const ordersModel = require("../models/orders") (sequelize,Sequelize)
+//encrypt md5 function
 const md5 = require('md5')
 const { validationResult } = require('express-validator');
 
@@ -97,8 +100,17 @@ exports.login = (req,res) => {
         }else{
         
             //res.send({ error: result, email: customerSetData.email} )
-            console.log("Home user entering...")  
-            res.redirect('/')  
+            console.log("Password and email match...")
+            if (result.name == 'admin')  
+                
+                console.log("Home admin session entering...")
+                //res.redirect('/adminsession')
+
+            else{ 
+                console.log("Home user entering...")
+                req.session.user = result
+                res.redirect('/usersession')
+            } 
         }
              
         
@@ -112,3 +124,54 @@ exports.login = (req,res) => {
 
 
 }//exports login
+
+
+exports.userSession = (req,res) => {
+    userdata = req.session.user
+    console.log (userdata.name)
+    console.log (userdata.id)
+    ordersModel.findAll({
+        where:{
+            customer_id:userdata.id
+        }
+    }).then( (orders) => {
+       
+        res.render("users/usersession",{title:"Session", layout: "sessionmaster", admin:false, userdata:userdata, orders:orders});
+    }
+    ).catch(err => {
+        req.flash("error_msg", "There is a problem with loading orders process.")
+        res.redirect('/')
+    })
+    
+}// esports userSession
+
+exports.ordersView = (req,res) => {
+    userdata = req.session.user
+    res.render('users/insertorders', {title: "Orders", layout:"sessionmaster",admin:false, userdata:userdata})
+}
+
+exports.ordersSave = (req,res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        req.session.errors = errors.array()
+        return res.redirect('/orders')
+    }
+    const orderSetData = {
+        customer_id: req.session.user.id,
+        description: req.body.description,
+        amount: req.body.amount
+     }
+    
+
+     ordersModel.create(orderSetData).then(data => {
+        //req.flash("success_msg","User register successful.")
+        console.log("Order: " + orderSetData.description+ "recorded successfully" )     
+        console.log("customer_id" + orderSetData.customer_id)  
+        res.redirect('/usersession');
+    }).catch((err) => {
+        console.log("oops" + err.message)
+        req.flash("error_msg", "There is a problem with order saving process.")
+        res.redirect('/orders')
+    })
+
+}
