@@ -5,6 +5,10 @@ const session = require('express-session')
 const flash = require('connect-flash')
 
 const handlebars = require("express-handlebars")
+const handlebars_mod = require('handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
+
+
 const bodyParser = require('body-parser')
 // routes settings
 //const admin = require ('./routes/admin')
@@ -39,7 +43,10 @@ app.use((req,res,next) => {
 
 
 // some settings 
-app.engine('handlebars', handlebars())
+
+app.engine('handlebars', handlebars({
+    handlebars: allowInsecurePrototypeAccess(handlebars_mod)
+}))
 app.set('view engine','handlebars')
 
 // use bodyparser to get post results and URI parameters
