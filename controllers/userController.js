@@ -12,6 +12,7 @@ exports.registrationMethod = (req,res) =>{
 }// exports registrationMethod
 
 
+
 exports.create =  (req,res) => {
 
     const errors = validationResult(req)
@@ -126,11 +127,24 @@ exports.login = (req,res) => {
 }//exports login
 
 
+exports.logout = (req,res) => {
+
+    if (req.session.user) {
+        req.session.destroy();
+    }
+    res.redirect('/');
+    
+}//logout
+
+
+
+
 exports.userSession = (req,res) => {
     userdata = req.session.user
     console.log (userdata.name)
     console.log (userdata.id)
     ordersModel.findAll({
+        order: [['description', 'ASC']],
         where:{
             customer_id:userdata.id
         }
@@ -148,7 +162,7 @@ exports.userSession = (req,res) => {
 exports.ordersView = (req,res) => {
     userdata = req.session.user
     res.render('users/insertorders', {title: "Orders", layout:"sessionmaster",admin:false, userdata:userdata})
-}
+}// exports
 
 exports.ordersSave = (req,res) => {
     const errors = validationResult(req)
@@ -174,4 +188,65 @@ exports.ordersSave = (req,res) => {
         res.redirect('/orders')
     })
 
+}//exports
+
+exports.deleteOrder = (req,res) => {
+
+    const id = req.params.id; // order id to be deleted
+
+    ordersModel.destroy({
+      where: { id: id }
+    }).then((result) => {
+        if (!result) {
+             req.status(400).send({message: "An error ocurred when trying to remove this order"})
+        }
+        res.redirect('/usersession')
+    }).catch( (err) => {
+        res.status(500).send({
+            message: "Could not delete order with id=" + id
+        });
+    })
+
 }
+
+
+exports.updateFormOrder = (req,res)=>{
+    const id = req.params.id;
+    userdata = req.session.user
+    ordersModel.findOne({
+        where: {id: id}
+    }).then(order => {
+        if (order){
+            res.render('users/editorder', {title: "Orders", layout:"sessionmaster",admin:false, order:order})
+        }else{
+            req.status(400).send({message: "An error ocurred when trying to find this order to update."})
+        }
+    }).catch(err =>{
+        res.status(500).send({
+            message: "Error updating order with id=" + id
+          });
+    })
+}
+    
+
+
+exports.updateOrder = (req, res) => {
+    const orderid = req.params.id;
+  
+    ordersModel.update({
+        description: req.body.description,
+        amount: req.body.amount
+    }, 
+    {
+      where: { id: orderid }
+    }).then(num => {
+        if (!num) {
+            req.status(400).send({message: "An error ocurred when trying to update this order"})
+        }
+        res.redirect('/usersession');
+    }).catch(err => {
+        res.status(500).send({
+          message: "Error updating order with id=" + orderid
+        });
+      });
+  };
