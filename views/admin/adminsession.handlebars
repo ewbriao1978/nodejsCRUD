@@ -1,0 +1,57 @@
+
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">E-mail</th>
+     
+
+    </tr>
+  </thead>
+  <tbody>
+
+
+    {{#each  customers }}
+        @if ($customer['name']=='admin') 
+            @continue;
+        @endif
+        <tr class="table-primary"> 
+        <td> {{ id }}</td>
+        <td> {{ name }} </td>
+        <td> {{ email }} </td></tr>
+    
+        <tr><td>
+            <table class="table table-light">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Description order(s)</th>
+                <th scope="col">Amount</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+             
+               {{#each orders}}
+                    @if (($order['customer_id'] != $customer['id'])) 
+                        @continue;
+                    @endif
+                    <tr> <td> {{ id }} </td>
+                    <td> {{ description}}</td>
+                    <td> {{ amount }} </td></tr>
+                   
+                {{/each}}
+
+
+            </body>
+           
+            </table>
+         </td></tr>   
+
+        {{/each}}    
+    </body>
+</table>

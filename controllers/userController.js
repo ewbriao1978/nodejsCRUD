@@ -102,12 +102,12 @@ exports.login = (req,res) => {
         
             //res.send({ error: result, email: customerSetData.email} )
             console.log("Password and email match...")
-            if (result.name == 'admin')  
+            if (result.name == 'admin'){  
                 
                 console.log("Home admin session entering...")
-                //res.redirect('/adminsession')
+                res.redirect('/admin')
 
-            else{ 
+            }else{ 
                 console.log("Home user entering...")
                 req.session.user = result
                 res.redirect('/usersession')

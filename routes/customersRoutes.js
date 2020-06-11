@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const { check } = require('express-validator');
 var userController = require("../controllers/userController")
+var adminController = require("../controllers/adminController")
 
 // validation rules
 let registrationFormValidator = [
@@ -45,6 +46,8 @@ router.get("/delete/:id",userController.deleteOrder)
 router.get("/edit/:id",orderFormValidator,userController.updateFormOrder)
 
 router.post("/edit/:id",orderFormValidator,userController.updateOrder)
+
+router.get("/admin", adminController.adminView)
 
 
 
