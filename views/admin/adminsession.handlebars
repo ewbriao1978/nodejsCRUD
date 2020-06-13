@@ -13,10 +13,7 @@
   <tbody>
 
 
-    {{#each  customers }}
-        @if ($customer['name']=='admin') 
-            @continue;
-        @endif
+    {{#each results }}
         <tr class="table-primary"> 
         <td> {{ id }}</td>
         <td> {{ name }} </td>
@@ -37,9 +34,7 @@
             <tbody>
              
                {{#each orders}}
-                    @if (($order['customer_id'] != $customer['id'])) 
-                        @continue;
-                    @endif
+                  
                     <tr> <td> {{ id }} </td>
                     <td> {{ description}}</td>
                     <td> {{ amount }} </td></tr>

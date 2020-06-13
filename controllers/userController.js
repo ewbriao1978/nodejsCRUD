@@ -84,7 +84,6 @@ exports.login = (req,res) => {
         password: md5(req.body.password)
     }
 
-    // 1 - fazer a autemticaçao Se houver erro, mencionar o erro. Senão entrar em outra rota/view. 
     
     customerModel.findOne({ 
         where: {
@@ -100,7 +99,6 @@ exports.login = (req,res) => {
             res.redirect('/');
         }else{
         
-            //res.send({ error: result, email: customerSetData.email} )
             console.log("Password and email match...")
             if (result.name == 'admin'){  
                 
@@ -178,7 +176,6 @@ exports.ordersSave = (req,res) => {
     
 
      ordersModel.create(orderSetData).then(data => {
-        //req.flash("success_msg","User register successful.")
         console.log("Order: " + orderSetData.description+ "recorded successfully" )     
         console.log("customer_id" + orderSetData.customer_id)  
         res.redirect('/usersession');
