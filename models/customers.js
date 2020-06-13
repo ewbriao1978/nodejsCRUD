@@ -25,11 +25,17 @@ var Customer = sequelize.define("customers", {
       default: Date.now()
     }
 
+
     
-  }
-  
-  )
+    
+  })
   // Customer.sync( { force: true } )
+
+//  Customer.associate = function(models) {
+//    Customer.hasMany(models.orders)
+//  };
+
+ // }
 
   return Customer;
 

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
           autoIncrement: true
         },
         customer_id: {
+          field: 'customer_id',
           type: DataTypes.BIGINT(20),
           references: {         // customer hasMany orders 1:n
             model: 'customers',
@@ -29,10 +30,12 @@ module.exports = (sequelize, DataTypes) => {
           default: Date.now()
         }
          
-      }
-      
-      )
+      })
       //Orders.sync( { force: true } )
+      //Orders.associate = (models) => {
+       // Orders.belongsTo(models.customers, {foreignKey: 'customer_id'})
+     // };
+
 
       return Orders;
     
